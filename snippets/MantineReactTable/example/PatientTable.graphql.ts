@@ -1,10 +1,11 @@
-import { RelatedPerson, Patient, Encounter, Extension } from '@medplum/fhirtypes';
+import { Encounter, Extension, Patient, Reference, RelatedPerson } from '@medplum/fhirtypes';
 
-export type GraphQLQueryResponsePatient = Pick<Patient, 'id' | 'photo' | 'name'> & {
+export type GraphQLQueryResponsePatient = Pick<Patient, 'id' | 'photo' | 'name' | 'birthDate'> & {
   RelatedPersonList: RelatedPerson[];
   lastEncounter: [Pick<Encounter, 'period'>];
   joinDate: Extension[];
   status: Extension[];
+  generalPractitioner: Reference[];
 };
 
 export interface GraphQLQueryResponse {
@@ -24,8 +25,8 @@ export interface GraphQLQueryResponse {
 }
 
 export const graphqlQuery = `
-query PaginatedQuery($offset: Int, $count: Int, $filters: String, $relatedPersonFilters: String, $sort: String) {
-  PatientConnection(_offset: $offset, _count: $count, _filter: $filters, _sort: $sort) {
+query PaginatedQuery($offset: Int, $count: Int, $filters: String, $relatedPersonFilters: String, $sorting: String) {
+  PatientConnection(_offset: $offset, _count: $count, _filter: $filters, _sort: $sorting) {
     count
     offset
     pageSize
@@ -36,15 +37,17 @@ query PaginatedQuery($offset: Int, $count: Int, $filters: String, $relatedPerson
         photo {
           url
         }
-        status: extension(url: "") {
+        status: extension(url: "http://example.com/StructureDefinition/patient-status") {
           valueString
+          valueCode
         }
-        joinDate: extension(url: "") {
+        joinDate: extension(url: "http://example.com/StructureDefinition/patient-join-date") {
           valueDateTime
         }
         name {
           family
           given
+          use
         }
         RelatedPersonList(_reference: patient, active: "true", _filter: $relatedPersonFilters) {
           name {
@@ -57,6 +60,10 @@ query PaginatedQuery($offset: Int, $count: Int, $filters: String, $relatedPerson
             end
           }
         }
+        generalPractitioner {
+          display
+        }
+        birthDate
       }
     }
   }

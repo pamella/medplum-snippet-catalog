@@ -12,6 +12,7 @@ A collection of reusable code snippets and components for Medplum projects.
 - [TestSetup](TestSetup)
 - [UploadCoreDataPage](UploadCoreDataPage)
 - [Generic Questionnaire](GenericQuestionnaire)
+- [MantineReactTable](MantineReactTable)
 
 ## Usage
 

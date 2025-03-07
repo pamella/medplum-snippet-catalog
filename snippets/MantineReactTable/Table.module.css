@@ -1,4 +1,4 @@
-.patientTable button {
+.table button {
   --button-color: var(--mantine-color-cyan-9) !important;
   --ai-hover: var(--ai-bg) !important;
 }
@@ -7,8 +7,7 @@
   justify-content: space-between;
 }
 
-/* There's no selector for the root MRT pagination component, so we have to use a parent selector */
-div:has(.pagination) {
+:global([class*='MRT_TablePagination-module_root']) {
   justify-content: center;
 }
 
