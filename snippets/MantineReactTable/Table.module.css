@@ -1,0 +1,21 @@
+.table button {
+  --button-color: var(--mantine-color-cyan-9) !important;
+  --ai-hover: var(--ai-bg) !important;
+}
+
+.tableHeadCell > div {
+  justify-content: space-between;
+}
+
+:global([class*='MRT_TablePagination-module_root']) {
+  justify-content: center;
+}
+
+.pagination > div {
+  padding: 10px 12px;
+  gap: 8px;
+
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 2000px;
+}
